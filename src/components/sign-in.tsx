@@ -1,4 +1,5 @@
-import { signIn } from "@/auth"
+import { signIn } from "next-auth/react"
+
  
 export function SignIn() {
   return (

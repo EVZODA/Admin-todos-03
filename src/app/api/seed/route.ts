@@ -1,26 +1,36 @@
 
 import prisma from '@/lib/prisma'
 import { NextResponse, NextRequest } from 'next/server'
+import bcrypt from 'bcryptjs';
 
-export async function GET(request: Request) { 
+export async function GET(request: Request) {
 
-   const deleteTodo = await prisma.todo.deleteMany()
+  await prisma.todo.deleteMany()
+  await prisma.user.deleteMany()
 
-   const todo = await prisma.todo.createMany({
-    data:[
-        {description:'Piedra del alma', complete:true},
-        {description:'Piedra del alma'},
-        {description:'Piedra del alma'},
-        {description:'Piedra del alma'},
-        {description:'Piedra del alma'}
-    ]
-   })
+  const user = await prisma.user.create({
+    data: {
+      email: 'test1@hotmail.com',
+      password: bcrypt.hashSync('123456'),
+      roles: ['admin', 'client'],
+      todos: {
+        create: [
+          { description: 'piedra de marte', complete: true },
+          { description: 'piedra de marte', complete: true },
+          { description: 'piedra de marte', complete: true },
+          { description: 'piedra de marte', complete: true },
+          { description: 'piedra de marte', complete: true },
+        ]
+      }
 
-  
+    }
+  })
+
 
   return NextResponse.json({
-    deleteTodo,
-    todo,
-    msg:'seed data'
-  })
+    msg:'ejecutado',
+    user
+})
+
+
 }

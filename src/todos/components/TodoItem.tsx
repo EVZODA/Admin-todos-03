@@ -6,7 +6,7 @@ import { IoCheckboxOutline, IoSquareOutline } from 'react-icons/io5'
 
 interface Props {
   todo:Todo
-  toogleTodo:(id:string, complete:boolean) =>Promise<Todo | void>
+  toogleTodo:(id:string, complete:boolean) =>Promise<Todo | null>
 }
 
 
